@@ -1,1 +1,10 @@
 # Parallel-assignment03
+
+# Problem 1
+First, the reason that the servants realized that they had more presents than "Thank you" notes was due to logical errors created by a lack of synchronization. This caused threads to be interacting with the linked list in ways that did not preserve the accuracy of the data. 
+
+The solution to this implements the same linked list. However, this version uses locks in order to preserve the consistency of the data and prevent logical errors. Whenever a thread is interacting with the linked list such as adding to it, the thread uses a lock to prevent other threads from also interacting with it. This coarse grain method of locking is not as fast as other methods of preserving data consistency. However, it is essentially guaranteed that the results will be accurate. Either way, this implementation is moderately efficient and accurately simulates adding presents and sending thank you notes. 
+
+# Problem 2
+This solution implements a simulation to the problem specification. 
+There are 8 threads, each representing a temperature sensor. There is also an additional thread representing the atmospheric temperature module. Each temperature sensor thread collects data every "minute" (6 milliseconds in the simulation) and uses a lock in order to preserve data consistency when adding observations to the temperatureReadings ArrayList. After an "hour" (600 milliseconds in the simulation) the atmospheric temperature module will run and use a lock in order to prevent temperature sensor threads from messing with the data. The atmospheric temperature module will gather the specified observations and print them. The thread will release the lock and allow the temperature sensor threads to continue the simulation. Overall, this implementation is efficient, guarantees progress, and preserves data consistency through the use of locks and a sequential consistency preserving design.
